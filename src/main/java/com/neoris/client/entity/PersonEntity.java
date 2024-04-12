@@ -1,12 +1,18 @@
 package com.neoris.client.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Entity(name="person")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name="person")
 public class PersonEntity {
 
     @Id

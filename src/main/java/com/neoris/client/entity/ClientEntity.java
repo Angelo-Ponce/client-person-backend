@@ -6,14 +6,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
-//@Entity(name="client")
 @Data
+@Entity
 public class ClientEntity extends PersonEntity {
-    /**
-     * Cliente debe manejar una entidad, que herede de la clase persona.
-     * Un cliente tiene:  clienteid, contraseña, estado.
-     * El cliente debe tener una clave única. (PK)
-     */
 
     @Column(nullable = false, unique=true)
     private String clientId;
