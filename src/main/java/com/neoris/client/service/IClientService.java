@@ -5,10 +5,11 @@ import com.neoris.vo.ClientVo;
 public interface IClientService {
 
     /**
-     * Save Client
+     * Save or update client.
+     *
      * @param clientVo client Object
      */
-    void save(ClientVo clientVo);
+    void saveOrUpdate(ClientVo clientVo);
 
     /**
      * Find client by id.
@@ -19,17 +20,9 @@ public interface IClientService {
     ClientVo findById(Long id);
 
     /**
-     * Update Person.
-     *
-     * @param clientVo client Object
-     * @return ClientVo updated in DB
-     */
-    ClientVo update(ClientVo clientVo);
-
-    /**
      * Delete client by Id.
      *
-     * @param clientId A client id
+     * @param id A person id
      */
-    void delete(Long clientId);
+    void delete(Long id);
 }

@@ -38,7 +38,7 @@ public class PersonEntity {
     private String phone;
 
     // AUDITABLE
-    @Column(name ="created_by_user" ,nullable = false, length = 50)
+    @Column(name ="created_by_user", length = 50)
     private String createdByUser;
 
     //@Temporal(TemporalType.TIMESTAMP)

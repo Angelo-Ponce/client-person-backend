@@ -4,8 +4,6 @@ import com.neoris.client.service.IClientService;
 import com.neoris.vo.BaseResponseVo;
 import com.neoris.vo.ClientVo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +16,24 @@ public class ClientController {
 
     @PostMapping
     public ResponseEntity<BaseResponseVo> addClient(@RequestBody ClientVo clientVo) {
-        // TODO: Validar si existe el registro
-
-        this.clientService.save(clientVo);
+        this.clientService.saveOrUpdate(clientVo);
         return ResponseEntity.ok(BaseResponseVo.builder().data(clientVo).build());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BaseResponseVo> getClientById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(BaseResponseVo.builder().data(this.clientService.findById(id)).build());
+    }
+
+    @PutMapping
+    public ResponseEntity<BaseResponseVo> updateClient(@RequestBody ClientVo clientVo) {
+        this.clientService.saveOrUpdate(clientVo);
+        return ResponseEntity.ok(BaseResponseVo.builder().data(clientVo).build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BaseResponseVo> deleteClient(@PathVariable("id") Long id) {
+        this.clientService.delete(id);
+        return ResponseEntity.ok(BaseResponseVo.builder().build());
     }
 }

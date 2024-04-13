@@ -1,7 +1,7 @@
 package com.neoris.core.service;
 
 import com.neoris.client.entity.ClientEntity;
-import com.neoris.client.repository.IClienteRepository;
+import com.neoris.client.repository.IClientRepository;
 import com.neoris.client.service.IClientService;
 import com.neoris.vo.ClientVo;
 import lombok.AllArgsConstructor;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -18,15 +19,19 @@ public class ClientService implements IClientService {
 
     private final ModelMapper mapper;
 
-    private final IClienteRepository repository;
+    private final IClientRepository repository;
 
-    @Override
     @Transactional
-    public void save(ClientVo clientVo) {
-        System.out.println("servicio cliente");
+    @Override
+    public void saveOrUpdate(ClientVo clientVo) {
+        if (clientVo.getId() != null) {
+            clientVo.setLastModifiedByUser("Angelo");
+            clientVo.setLastModifiedDate(new Date());
+        } else {
+            clientVo.setCreatedByUser("Angelo");
+            clientVo.setCreatedDate(new Date());
+        }
         ClientEntity clientEntity = mapper.map(clientVo, ClientEntity.class);
-        clientEntity.setCreatedByUser("Angelo");
-        clientEntity.setCreatedDate(new Date());
         this.repository.save(clientEntity);
         clientVo.setId(clientEntity.getId());
     }
@@ -34,17 +39,21 @@ public class ClientService implements IClientService {
     @Override
     @Transactional(readOnly = true)
     public ClientVo findById(Long id) {
-        return null;
+        ClientVo clientVo = null;
+        Optional<ClientEntity> clientEntity = this.repository.findById(id);
+        if (clientEntity.isPresent()) {
+            clientVo = mapper.map(clientEntity.get(), ClientVo.class);
+        }
+        return clientVo;
     }
 
     @Transactional
     @Override
-    public ClientVo update(ClientVo clientVo) {
-        return null;
-    }
-
-    @Transactional
-    @Override
-    public void delete(Long clientId) {
+    public void delete(Long id) {
+        ClientVo clientVo = this.findById(id);
+        if (clientVo != null) {
+            clientVo.setStatus(Boolean.FALSE);
+            this.saveOrUpdate(clientVo);
+        }
     }
 }

@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Base response vo
+ * @param <T>
+ */
 @Data
 @Builder
 @AllArgsConstructor
