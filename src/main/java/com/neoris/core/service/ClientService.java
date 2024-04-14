@@ -24,7 +24,7 @@ public class ClientService implements IClientService {
     @Transactional
     @Override
     public void saveOrUpdate(ClientVo clientVo) {
-        if (clientVo.getId() != null) {
+        if (clientVo.getPersonId() != null) {
             clientVo.setLastModifiedByUser("Angelo");
             clientVo.setLastModifiedDate(new Date());
         } else {
@@ -33,7 +33,7 @@ public class ClientService implements IClientService {
         }
         ClientEntity clientEntity = mapper.map(clientVo, ClientEntity.class);
         this.repository.save(clientEntity);
-        clientVo.setId(clientEntity.getId());
+        clientVo.setPersonId(clientEntity.getPersonId());
     }
 
     @Override

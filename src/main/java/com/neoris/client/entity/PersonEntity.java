@@ -17,7 +17,7 @@ public class PersonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long personId;
 
     @Column(nullable = false, unique = true)
     private String identificacion;
@@ -41,7 +41,7 @@ public class PersonEntity {
     @Column(name ="created_by_user", length = 50)
     private String createdByUser;
 
-    //@Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
     private Date createdDate;
 

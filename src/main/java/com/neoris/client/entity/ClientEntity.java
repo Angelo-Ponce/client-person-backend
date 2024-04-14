@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Entity
+@Entity(name = "client")
 public class ClientEntity extends PersonEntity {
 
     @Column(nullable = false, unique=true)

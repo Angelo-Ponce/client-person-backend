@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class PersonVo {
 
-    private Long id;
+    private Long personId;
 
     private String identificacion;
 
