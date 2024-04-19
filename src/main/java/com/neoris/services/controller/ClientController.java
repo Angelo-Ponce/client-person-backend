@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class ClientController {
                     schema = @Schema(implementation = BaseResponseVo.class))}),
     })
     @PostMapping
-    public ResponseEntity<BaseResponseVo> addClient(@RequestBody ClientVo clientVo) {
+    public ResponseEntity<BaseResponseVo> addClient(@Valid @RequestBody ClientVo clientVo) {
         this.clientService.saveOrUpdate(clientVo);
         return ResponseEntity.ok(BaseResponseVo.builder().data(clientVo).build());
     }
