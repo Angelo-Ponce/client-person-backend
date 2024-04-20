@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,23 +31,27 @@ public class ClientController {
                     schema = @Schema(implementation = BaseResponseVo.class))}),
     })
     @PostMapping
+    @PreAuthorize("hasRole('admin_client_role') or hasRole('user_client_role')")
     public ResponseEntity<BaseResponseVo> addClient(@Valid @RequestBody ClientVo clientVo) {
         this.clientService.saveOrUpdate(clientVo);
         return ResponseEntity.ok(BaseResponseVo.builder().data(clientVo).build());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('admin_client_role') or hasRole('user_client_role')")
     public ResponseEntity<BaseResponseVo> getClientById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(BaseResponseVo.builder().data(this.clientService.findById(id)).build());
     }
 
     @PutMapping
+    @PreAuthorize("hasRole('admin_client_role') or hasRole('user_client_role')")
     public ResponseEntity<BaseResponseVo> updateClient(@RequestBody ClientVo clientVo) {
         this.clientService.saveOrUpdate(clientVo);
         return ResponseEntity.ok(BaseResponseVo.builder().data(clientVo).build());
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('admin_client_role')")
     public ResponseEntity<BaseResponseVo> deleteClient(@PathVariable("id") Long id) {
         this.clientService.delete(id);
         return ResponseEntity.ok(BaseResponseVo.builder().build());
